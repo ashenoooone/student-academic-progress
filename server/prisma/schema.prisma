@@ -90,14 +90,14 @@ model Attendance {
 
 // Модель оценки
 model Grade {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   studentId Int
   subjectId Int
-  grade     String
+  grade     GradeEnum
   examType  ExamType
   date      DateTime
-  student   Student  @relation(fields: [studentId], references: [id])
-  subject   Subject  @relation(fields: [subjectId], references: [id])
+  student   Student   @relation(fields: [studentId], references: [id])
+  subject   Subject   @relation(fields: [subjectId], references: [id])
 }
 
 // Модель межсессионного статуса
@@ -109,4 +109,13 @@ model InterimStatus {
   date      DateTime
   student   Student           @relation(fields: [studentId], references: [id])
   subject   Subject           @relation(fields: [subjectId], references: [id])
+}
+
+enum GradeEnum {
+  EXCELLENT // Отлично
+  GOOD // Хорошо
+  SATISFACTORY // Удовлетворительно
+  UNSATISFACTORY // Неудовлетворительно
+  PASSED // Зачтено
+  NOT_PASSED // Незачтено
 }

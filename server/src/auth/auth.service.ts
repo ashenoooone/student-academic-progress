@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { DatabaseService } from 'src/database/database.service';
 import { AuthUserDto } from './dto/auth-user.dto';
@@ -67,7 +67,6 @@ export class AuthService {
       throw new UserNotFound();
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { passwordHash: _hashPassword, ...userWithoutPassword } = user;
 
     return {

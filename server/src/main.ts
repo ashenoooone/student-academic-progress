@@ -11,6 +11,17 @@ async function bootstrap() {
     .setDescription('')
     .setVersion('1.0')
     .addTag('')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'Authorization',
+        description: 'Введите JWT токен',
+        in: 'header',
+      },
+      'Bearer',
+    )
     .build();
 
   app.enableCors({
@@ -23,4 +34,5 @@ async function bootstrap() {
 
   await app.listen(process.env.PORT ?? 8080);
 }
+
 bootstrap();
