@@ -9,7 +9,7 @@ import Animated, {
 
 import { ThemedView } from '@/shared/ui/ThemedView';
 import { useBottomTabOverflow } from '@/shared/ui/TabBarBackground';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { useColorScheme } from '@/shared/hooks/useColorScheme';
 
 const HEADER_HEIGHT = 250;
 
@@ -34,7 +34,7 @@ export default function ParallaxScrollView({
           translateY: interpolate(
             scrollOffset.value,
             [-HEADER_HEIGHT, 0, HEADER_HEIGHT],
-            [-HEADER_HEIGHT / 2, 0, HEADER_HEIGHT * 0.75]
+            [-HEADER_HEIGHT / 2, 0, HEADER_HEIGHT * 0.75],
           ),
         },
         {
