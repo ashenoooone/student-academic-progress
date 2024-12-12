@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-arm64-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Student {
+  id              Int             @id @default(autoincrement())
+  firstName       String
+  lastName        String
+  patronymic      String?
+  enrollmentYear  Int
+  groupId         Int
+  group           Group           @relation(fields: [groupId], references: [id])
+  attendances     Attendance[]
+  grades          Grade[]
+  interimStatuses InterimStatus[]
+}
+
+model Group {
+  id        Int        @id @default(autoincrement())
+  name      String
+  course    Int
+  faculty   String
+  students  Student[]
+  subjects  Subject[]
+  schedules Schedule[]
+}
+
+model Subject {
+  id              Int             @id @default(autoincrement())
+  name            String
+  semester        Int
+  hours           Int
+  groupId         Int
+  group           Group           @relation(fields: [groupId], references: [id])
+  schedules       Schedule[]
+  grades          Grade[]
+  interimStatuses InterimStatus[]
+}
+
+model Schedule {
+  id          Int          @id @default(autoincrement())
+  subjectId   Int
+  groupId     Int
+  date        DateTime
+  time        DateTime
+  location    String
+  subject     Subject      @relation(fields: [subjectId], references: [id])
+  group       Group        @relation(fields: [groupId], references: [id])
+  attendances Attendance[]
+}
+
+model Attendance {
+  id         Int      @id @default(autoincrement())
+  studentId  Int
+  scheduleId Int
+  status     String
+  student    Student  @relation(fields: [studentId], references: [id])
+  schedule   Schedule @relation(fields: [scheduleId], references: [id])
+}
+
+model Grade {
+  id        Int      @id @default(autoincrement())
+  studentId Int
+  subjectId Int
+  grade     String
+  examType  String
+  date      DateTime
+  student   Student  @relation(fields: [studentId], references: [id])
+  subject   Subject  @relation(fields: [subjectId], references: [id])
+}
+
+model InterimStatus {
+  id        Int      @id @default(autoincrement())
+  studentId Int
+  subjectId Int
+  status    String
+  date      DateTime
+  student   Student  @relation(fields: [studentId], references: [id])
+  subject   Subject  @relation(fields: [subjectId], references: [id])
+}
