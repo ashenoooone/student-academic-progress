@@ -75,4 +75,14 @@ export class AuthService {
       token: this.jwtService.sign(userWithoutPassword),
     };
   }
+
+  async check(userId: number) {
+    const user = await this.db.student.findFirst({
+      where: {
+        id: userId,
+      },
+    });
+
+    return user;
+  }
 }
