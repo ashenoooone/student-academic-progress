@@ -1,1 +1,1 @@
-export type { Student } from '../types';
+export type { Student, Attendance } from '../types';
