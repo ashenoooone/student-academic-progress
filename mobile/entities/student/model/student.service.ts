@@ -5,7 +5,10 @@ export class StudentService {
     return $api.get('auth/check');
   }
 
-  static async register() {
-    return $api.post('auth/signup');
+  static async signin(body: {
+    login: string;
+    password: string;
+  }) {
+    return $api.post('auth/signin', body);
   }
 }

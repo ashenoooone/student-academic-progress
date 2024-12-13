@@ -1,1 +1,1 @@
-export type { Student, Attendance } from '../types';
+export type { Student, Attendance } from '../model/types';

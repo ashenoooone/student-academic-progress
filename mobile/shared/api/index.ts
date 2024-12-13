@@ -8,25 +8,15 @@ const $api = axios.create({
 
 $api.interceptors.request.use(
   async (config) => {
-    const token = SecureStoreService.getValue(SECURE_STORE_KEYS.jwt);
+    const token = SecureStoreService.getValue(
+      SECURE_STORE_KEYS.jwt,
+    );
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
   (error) => {
-    return Promise.reject(error);
-  },
-);
-
-$api.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  async (error) => {
-    if (error.response && error.response.status === 401) {
-      await SecureStoreService.deleteValue(SECURE_STORE_KEYS.jwt);
-    }
     return Promise.reject(error);
   },
 );
